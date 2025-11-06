@@ -17,7 +17,7 @@ final class DatabaseSeeder extends Seeder
         Product::create([
             'title' => 'Дикий Мёд',
             'description' => '(Очень крутое описание)',
-            'price' => '2000'
+            'price' => '2000',
         ])->addMedia(
             public_path('assets/images/honey.jpg')
         )->preservingOriginal()->toMediaCollection('image');
@@ -25,7 +25,7 @@ final class DatabaseSeeder extends Seeder
         Product::create([
             'title' => 'Яйца Валерия',
             'description' => '(Очень крутое описание)',
-            'price' => '2000'
+            'price' => '2000',
         ])->addMedia(
             public_path('assets/images/eggs.jpg')
         )->preservingOriginal()->toMediaCollection('image');

@@ -12,8 +12,8 @@ def get_categories():
 def get_category(category_id: int):
     return requests.get(API_URL + 'categories/' + str(category_id)).json()['data']
 
-def get_products(category_id: int):
-    return requests.get(API_URL + 'categories/' + str(category_id) + '/products').json()['data']
+def get_products():
+    return requests.get(API_URL + 'products').json()['data']
 
 def get_product(product_id: int):
     return requests.get(API_URL + 'products/' + str(product_id)).json()['data']
@@ -21,7 +21,7 @@ def get_product(product_id: int):
 def add_product_to_cart(option_id: int, chat_id: int):
     payload = {
         "chat_id": chat_id,
-        "option_id": option_id,
+        "product_id": option_id,
     }
     return requests.post(API_URL + 'cart_items', json=payload).json()['data']
 

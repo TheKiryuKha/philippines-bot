@@ -1,8 +1,10 @@
 from aiogram.utils.keyboard import InlineKeyboardBuilder
+from utils.api import get_products
 
-def products_kb(products):
+
+def create_kb():
     kb = InlineKeyboardBuilder()
-    for product in products:
+    for product in get_products():
         kb.button(
             text=f"{product['attributes']['title']}",
             callback_data="product_" + f"{product['id']}"

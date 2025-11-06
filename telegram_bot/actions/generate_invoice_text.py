@@ -21,9 +21,7 @@ def generate(invoice):
     # message += f"\n\n <b>Способы оплаты:</b>\n\n"
     message += ( 
             f"⚡️\n\n <b>Реквизиты для оплаты</b> 👇\n\n"
-            f"+7 (981) 111-25-43 \n"
-            f"Райффайзен\n"
-            f"(Куква Г.Аcd.)\n\n"
+            f"WORK IN PROGRESS \n"
     )
     message += "‼️ <b> ВАЖНО: для завершения и отправки заказа отправьте скриншот 🧾 об оплате в этот чат.</b>\n"
     message += "📩 Данные для отслеживания придут в этом диалоге с ботом"
@@ -65,6 +63,5 @@ def generate_for_shipping(invoice):
 
     for item in invoice['attributes']['items']:
         message += f"\n\n<b>{item['attributes']['title']} x {item['attributes']['amount']}</b>"
-        message += f"\n{item['attributes']['volume']} | {item['attributes']['type']}"
 
     return message

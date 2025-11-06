@@ -1,11 +1,9 @@
 from aiogram import Bot
 from aiogram.types import CallbackQuery, FSInputFile, BufferedInputFile
 from typing import List, Any
-from keyboards.options_keyboard import options_kb
+from keyboards.product_keyboard import create_kb
 from utils.api import get_cart
-from PIL import Image
 import base64
-
 
 async def show_product(update: CallbackQuery, bot: Bot, product: List[Any]):
 
@@ -13,6 +11,7 @@ async def show_product(update: CallbackQuery, bot: Bot, product: List[Any]):
 
     text = f"<b>{product['attributes']['title']}</b>\n"
     text += f"{product['attributes']['description']}\n\n"
+    text += f"Цена: {product['attributes']['price']}"
 
     base64_str = product['attributes']['media']['image']
     
@@ -24,6 +23,6 @@ async def show_product(update: CallbackQuery, bot: Bot, product: List[Any]):
         chat_id=update.from_user.id,
         photo=image,
         caption=text,
-        reply_markup=options_kb(product, cart, update.from_user.id),
+        reply_markup=create_kb(product, cart, update.from_user.id),
         parse_mode="HTML"
     )

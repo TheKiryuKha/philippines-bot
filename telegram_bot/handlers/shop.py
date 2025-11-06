@@ -1,6 +1,6 @@
 from aiogram import Bot
 from aiogram.types import Message
-from keyboards.categories_keyboard import create_kb
+from keyboards.products_keyboard import create_kb
 from utils.clear_messages import clear
 
 async def shop(message: Message, bot: Bot):
