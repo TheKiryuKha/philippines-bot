@@ -4,23 +4,30 @@ declare(strict_types=1);
 
 namespace App\Actions\Product;
 
+use App\Actions\Cart\EditCartAction;
 use App\Models\Product;
-use App\Models\ProductOption;
 use Illuminate\Support\Facades\DB;
 
 final readonly class DeleteProductAction
 {
     public function __construct(
-        private DeleteProductOptionAction $action
+        private EditCartAction $action
     ) {}
 
     public function handle(Product $product): void
     {
         DB::transaction(function () use ($product): void {
 
-            $product->options()->each(
-                fn (ProductOption $option) => $this->action->handle($option)
-            );
+            foreach ($product->cart_items as $cart_item) {
+                $cart = $cart_item->cart;
+
+                $this->action->handle($cart, [
+                    'amount' => -$cart_item->amount,
+                    'price' => -$product->price * $cart_item->amount,
+                ]);
+
+                $cart_item->delete();
+            }
 
             $product->delete();
         });

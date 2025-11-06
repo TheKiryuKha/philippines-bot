@@ -6,7 +6,6 @@ use App\Models\Product;
 beforeEach(function () {
     $this->product = Product::factory()
         ->withImage()
-        ->withOptions(3)
         ->create();
 });
 
@@ -28,18 +27,7 @@ it("return's correct data", function () {
             'attributes' => [
                 'title',
                 'description',
-                'options' => [
-                    '*' => [
-                        'id',
-                        'type',
-                        'attributes' => [
-                            'volume',
-                            'price',
-                            'type',
-                            'formatted_price',
-                        ],
-                    ],
-                ],
+                'price',
                 'media' => [
                     'type',
                     'image',

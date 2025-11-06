@@ -14,24 +14,19 @@ final readonly class CreateProductAction
      * image_link: string,
      * title: string,
      * description: string,
-     * options: array<array{type: string, volume: string, price: int}>
+     * price: int,
      * } $attr
      */
     public function handle(array $attr): void
     {
         DB::transaction(function () use ($attr): void {
+            $image = $attr['image_link'];
+            unset($attr['image_link']);
 
-            $product = Product::create([
-                'title' => $attr['title'],
-                'description' => $attr['description'],
-            ]);
-
-            foreach ($attr['options'] as $option) {
-                $product->options()->create($option);
-            }
+            $product = Product::create($attr);
 
             $product
-                ->addMediaFromUrl($attr['image_link'])
+                ->addMediaFromUrl($image)
                 ->toMediaCollection('image');
         });
     }

@@ -23,7 +23,7 @@ it("update's item's amount", function () {
     $this->patch(route('api:v1:cart_items:edit', $this->item));
 
     $this->assertDatabaseHas('cart_items', [
-        'product_option_id' => $this->item->product_option_id,
+        'product_id' => $this->item->product_id,
         'amount' => 1,
     ]);
 });
@@ -34,7 +34,7 @@ it("update's cart's data", function () {
     $this->assertDatabaseHas('carts', [
         'id' => $this->item->cart_id,
         'products_amount' => 1,
-        'price' => $this->item->product_option->price * 100,
+        'price' => $this->item->product->price * 100,
     ]);
 });
 

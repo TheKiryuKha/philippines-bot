@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Database\Factories;
 
 use App\Models\Invoice;
-use App\Models\ProductOption;
+use App\Models\Product;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -20,7 +20,7 @@ final class InvoiceItemFactory extends Factory
     {
         return [
             'invoice_id' => Invoice::factory(),
-            'product_option_id' => ProductOption::factory(),
+            'product_id' => Product::factory(),
             'amount' => 1,
         ];
     }

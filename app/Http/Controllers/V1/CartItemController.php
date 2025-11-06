@@ -15,9 +15,9 @@ final readonly class CartItemController
 {
     public function store(CreateCartItemRequest $request, CreateCartItemAction $action): ProductResource
     {
-        $action->handle($request->getCart(), $request->getOption());
+        $action->handle($request->getCart(), $request->getProduct());
 
-        return new ProductResource($request->getOption()->product);
+        return new ProductResource($request->getProduct());
     }
 
     public function edit(CartItem $cart_item, EditCartItemAction $action): JsonResponse

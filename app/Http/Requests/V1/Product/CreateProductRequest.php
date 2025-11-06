@@ -17,10 +17,7 @@ final class CreateProductRequest extends FormRequest
             'image_link' => 'required|string',
             'title' => 'required|string|max:255',
             'description' => 'required|string',
-            'options' => 'required|array|min:1',
-            'options.*.type' => 'required|string|max:255',
-            'options.*.price' => 'required|integer|min:0',
-            'options.*.volume' => 'required|string',
+            'price' => 'required|integer',
         ];
     }
 
@@ -29,7 +26,7 @@ final class CreateProductRequest extends FormRequest
      * image_link: string,
      * title: string,
      * description: string,
-     * options: array<array{type: string, volume: string, price: int}>
+     * price: int,
      * }
      */
     public function validated($key = null, $default = null): array
@@ -39,7 +36,7 @@ final class CreateProductRequest extends FormRequest
          * image_link: string,
          * title: string,
          * description: string,
-         * options: array<array{type: string, volume: string, price: int}>
+         * price: int,
          * } $data
          */
         $data = parent::validated($key);

@@ -24,7 +24,7 @@ final readonly class EditCartItemAction
 
             $this->action->handle($cart_item->cart, [
                 'amount' => -1,
-                'price' => -$cart_item->product_option->price,
+                'price' => -$cart_item->product->price,
             ]);
 
             return $cart_item;

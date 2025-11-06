@@ -7,7 +7,6 @@ namespace Database\Factories;
 use App\Models\Cart;
 use App\Models\CartItem;
 use App\Models\Product;
-use App\Models\ProductOption;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Http\UploadedFile;
 
@@ -24,7 +23,15 @@ final class ProductFactory extends Factory
         return [
             'title' => fake()->title(),
             'description' => fake()->text(),
+            'price' => fake()->numberBetween(1000, 1000000),
         ];
+    }
+
+    public function price(int $price): self
+    {
+        return $this->state(fn (array $attrbiutes): array => [
+            'price' => $price,
+        ]);
     }
 
     public function withImage(): self
@@ -37,30 +44,19 @@ final class ProductFactory extends Factory
             });
     }
 
-    public function withOptions(int $amount): self
-    {
-        return $this->state(fn (array $attributes): array => [])
-            ->afterCreating(function (Product $product) use ($amount): void {
-                ProductOption::factory($amount)
-                    ->for($product)
-                    ->create();
-            });
-    }
-
     public function inCart(): self
     {
         return $this->state(fn (array $attributes): array => [])
             ->afterCreating(function (Product $product): void {
-                $option = $product->options()->first();
 
                 $cart = Cart::factory()->create([
                     'products_amount' => 1,
-                    'price' => $option->price,
+                    'price' => $product->price,
                 ]);
 
                 CartItem::factory()
                     ->for($cart)
-                    ->for($option, 'product_option')
+                    ->for($product)
                     ->create(['amount' => 1]);
             });
     }

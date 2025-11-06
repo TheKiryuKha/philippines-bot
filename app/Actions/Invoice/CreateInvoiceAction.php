@@ -36,7 +36,6 @@ final readonly class CreateInvoiceAction
 
             $invoice = Invoice::create([
                 ...$attr,
-                'delivery_address' => $attr['delivery_address'],
                 'price' => $cart->price,
                 'status' => InvoiceStatus::Created,
                 'expires_at' => now()->addMinutes(5),

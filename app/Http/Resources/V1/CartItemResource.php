@@ -19,10 +19,9 @@ final class CartItemResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        $this->resource->load('product_option');
+        $this->resource->load('product');
 
-        $option = $this->resource->product_option;
-        $product = $option->product;
+        $product = $this->resource->product;
 
         return [
             'id' => $this->resource->id,
@@ -30,12 +29,10 @@ final class CartItemResource extends JsonResource
                 'amount' => $this->resource->amount,
                 'title' => $product->title,
                 'description' => $product->description,
-                'option_id' => $option->id,
-                'volume' => $option->volume,
-                'price' => $option->price,
-                'formatted_price' => $option->formatted_price,
+                'product_id' => $product->id,
+                'price' => $product->price,
+                'formatted_price' => $product->formatted_price,
                 'total_price' => $this->resource->formatted_price,
-                'type' => $option->type,
             ],
         ];
     }

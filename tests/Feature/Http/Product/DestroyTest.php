@@ -2,7 +2,9 @@
 
 declare(strict_types=1);
 use App\Models\Cart;
+use App\Models\CartItem;
 use App\Models\Product;
+use Illuminate\Support\Facades\Log;
 
 it("return's correct status code", function () {
     $this->delete(
@@ -20,25 +22,18 @@ it("delete's product", function () {
     $this->assertDatabaseMissing('products', ['id' => $product->id]);
 });
 
-it("delete's product options", function () {
-    $product = Product::factory()->withOptions(3)->create();
-    $option_id = $product->options()->first()->id;
-
-    $this->delete(route('api:v1:products:destroy', $product));
-
-    $this->assertDatabaseMissing('product_options', ['id' => $option_id]);
-});
-
 it("delete's product's from cart's", function () {
-    $product = Product::factory()->withOptions(3)->inCart()->create();
+    $product = Product::factory()->inCart()->create();
+    Log::info(CartItem::all());
 
     $this->delete(route('api:v1:products:destroy', $product));
 
+    Log::info(CartItem::all());
     $this->assertDatabaseCount('cart_items', 0);
 });
 
 it("update's cart data after removing product from it", function () {
-    $product = Product::factory()->withOptions(3)->inCart()->create();
+    $product = Product::factory()->inCart()->create();
 
     $this->delete(route('api:v1:products:destroy', $product));
 

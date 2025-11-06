@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace App\Models;
 
 use App\Enums\ProductStatus;
+use App\Models\Traits\HasPrice;
 use Carbon\CarbonInterface;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -17,23 +17,25 @@ use Spatie\MediaLibrary\InteractsWithMedia;
  * @property-read int $id
  * @property-read string $title
  * @property-read string $description
+ * @property-read int $price
+ * @property-read string $formatted_price
  * @property-read CarbonInterface $created_at
  * @property-read CarbonInterface $updated_at
- * @property-read Collection<int, ProductOption> $options
  */
 final class Product extends Model implements HasMedia
 {
     /** @use HasFactory<\Database\Factories\ProductFactory> */
     use HasFactory;
 
+    use HasPrice;
     use InteractsWithMedia;
 
     /**
-     * @return HasMany<ProductOption, $this>
+     * @return HasMany<CartItem, $this>
      */
-    public function options(): HasMany
+    public function cart_items(): HasMany
     {
-        return $this->hasMany(ProductOption::class);
+        return $this->hasMany(CartItem::class);
     }
 
     /**

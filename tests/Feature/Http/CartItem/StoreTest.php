@@ -4,13 +4,10 @@ declare(strict_types=1);
 
 use App\Models\Cart;
 use App\Models\Product;
-use App\Models\ProductOption;
 use App\Models\User;
 
 beforeEach(function () {
-    $this->option = ProductOption::factory()
-        ->for(Product::factory())
-        ->create();
+    $this->product = Product::factory()->create();
 
     $this->user = User::factory()
         ->has(Cart::factory())
@@ -18,7 +15,7 @@ beforeEach(function () {
 
     $this->data = [
         'chat_id' => $this->user->chat_id,
-        'option_id' => $this->option->id,
+        'product_id' => $this->product->id,
     ];
 });
 
@@ -36,7 +33,7 @@ it("save's cartItem in DB", function () {
     );
 
     $this->assertDatabaseHas('cart_items', [
-        'product_option_id' => $this->data['option_id'],
+        'product_id' => $this->data['product_id'],
         'amount' => 1,
         'cart_id' => $this->user->cart->id,
     ]);
@@ -50,7 +47,7 @@ it("update's cart's data", function () {
     $this->assertDatabaseHas('carts', [
         'user_id' => $this->user->id,
         // цена хранится в копейках
-        'price' => $this->option->price * 100,
+        'price' => $this->product->price * 100,
         'products_amount' => 1,
     ]);
 });
@@ -60,13 +57,13 @@ test('validation', function () {
         route('api:v1:cart_items:store')
     )->assertInvalid([
         'chat_id',
-        'option_id',
+        'product_id',
     ]);
 });
 
 it("don't create's already existing cart item", function () {
     Cart::first()->items()->create([
-        'product_option_id' => $this->option->id,
+        'product_id' => $this->product->id,
         'amount' => 1,
     ]);
 
@@ -79,7 +76,7 @@ it("don't create's already existing cart item", function () {
 
 it("update's alredy existing cart item amount", function () {
     Cart::first()->items()->create([
-        'product_option_id' => $this->option->id,
+        'product_id' => $this->product->id,
         'amount' => 1,
     ]);
 
@@ -88,7 +85,7 @@ it("update's alredy existing cart item amount", function () {
     );
 
     $this->assertDatabaseHas('cart_items', [
-        'product_option_id' => $this->option->id,
+        'product_id' => $this->product->id,
         'amount' => 2,
     ]);
 });
@@ -105,7 +102,7 @@ it("return's correct data", function () {
             'attributes' => [
                 'title',
                 'description',
-                'options',
+                'price',
                 'media',
             ],
         ],

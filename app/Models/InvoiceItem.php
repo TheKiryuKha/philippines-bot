@@ -12,12 +12,12 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 /**
  * @property-read int $id
  * @property-read int $invoice_id
- * @property-read int $product_option_id
+ * @property-read int $product_id
  * @property-read int $amount
  * @property-read string $formatted_price
  * @property-read CarbonInterface $created_at
  * @property-read CarbonInterface $updated_at
- * @property-read ProductOption $product_option
+ * @property-read Product $product
  */
 final class InvoiceItem extends Model
 {
@@ -25,11 +25,11 @@ final class InvoiceItem extends Model
     use HasFactory;
 
     /**
-     * @return BelongsTo<ProductOption, $this>
+     * @return BelongsTo<Product, $this>
      */
-    public function product_option(): BelongsTo
+    public function product(): BelongsTo
     {
-        return $this->belongsTo(ProductOption::class);
+        return $this->belongsTo(Product::class);
     }
 
     /**
@@ -43,7 +43,7 @@ final class InvoiceItem extends Model
     public function getFormattedPriceAttribute(): string
     {
         return number_format(
-            num: $this->product_option->price * $this->amount,
+            num: $this->product->price * $this->amount,
             thousands_separator: ' '
         ).'₽';
     }

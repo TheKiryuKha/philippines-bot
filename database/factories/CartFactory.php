@@ -41,7 +41,7 @@ final class CartFactory extends Factory
         )->afterCreating(function (Cart $cart): void {
             $cart->update([
                 'products_amount' => $cart->items->sum('amount'),
-                'price' => $cart->items->sum(fn ($item): int|float => $item->product_option->price * $item->amount),
+                'price' => $cart->items->sum(fn ($item): int|float => $item->product->price * $item->amount),
             ]);
         });
     }

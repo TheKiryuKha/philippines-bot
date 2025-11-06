@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 use App\Models\Cart;
 use App\Models\CartItem;
-use App\Models\ProductOption;
+use App\Models\Product;
 
 test('to array', function () {
     $cart_item = CartItem::factory()->create()->fresh();
@@ -13,7 +13,7 @@ test('to array', function () {
         ->toBe([
             'id',
             'cart_id',
-            'product_option_id',
+            'product_id',
             'amount',
             'created_at',
             'updated_at',
@@ -26,10 +26,10 @@ it('belongs to Cart', function () {
     expect($cart_item->cart)->toBeInstanceOf(Cart::class);
 });
 
-it('belongs to ProductOption', function () {
+it('belongs to product', function () {
     $cart_item = CartItem::factory()->create();
 
-    expect($cart_item->product_option)->toBeInstanceOf(ProductOption::class);
+    expect($cart_item->product)->toBeInstanceOf(Product::class);
 });
 
 test('formatted price', function () {

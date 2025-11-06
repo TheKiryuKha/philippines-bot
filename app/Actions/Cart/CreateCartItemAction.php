@@ -6,7 +6,7 @@ namespace App\Actions\Cart;
 
 use App\Models\Cart;
 use App\Models\CartItem;
-use App\Models\ProductOption;
+use App\Models\Product;
 use Illuminate\Support\Facades\DB;
 
 final readonly class CreateCartItemAction
@@ -15,12 +15,12 @@ final readonly class CreateCartItemAction
         private EditCartAction $action
     ) {}
 
-    public function handle(Cart $cart, ProductOption $option): CartItem
+    public function handle(Cart $cart, Product $option): CartItem
     {
         return DB::transaction(function () use ($cart, $option): CartItem {
 
             $item = $cart->items()->firstOrCreate(
-                ['product_option_id' => $option->id],
+                ['product_id' => $option->id],
                 ['amount' => 0]
             );
 

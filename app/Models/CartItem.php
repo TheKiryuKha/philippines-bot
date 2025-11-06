@@ -12,18 +12,26 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 /**
  * @property-read int $id
  * @property-read int $cart_id
- * @property-read int $product_option_id
+ * @property-read int $product_id
  * @property-read int $amount
  * @property-read string $formatted_price
  * @property-read CarbonInterface $created_at
  * @property-read CarbonInterface $updated_at
  * @property-read Cart $cart
- * @property-read ProductOption $product_option
+ * @property-read Product $product
  */
 final class CartItem extends Model
 {
     /** @use HasFactory<\Database\Factories\CartItemFactory> */
     use HasFactory;
+
+    /**
+     * @return BelongsTo<Product, $this>
+     */
+    public function product(): BelongsTo
+    {
+        return $this->belongsTo(Product::class);
+    }
 
     /**
      * @return BelongsTo<Cart, $this>
@@ -33,18 +41,10 @@ final class CartItem extends Model
         return $this->belongsTo(Cart::class);
     }
 
-    /**
-     * @return BelongsTo<ProductOption, $this>
-     */
-    public function product_option(): BelongsTo
-    {
-        return $this->belongsTo(ProductOption::class);
-    }
-
     public function getFormattedPriceAttribute(): string
     {
         return number_format(
-            num: $this->product_option->price * $this->amount,
+            num: $this->product->price * $this->amount,
             thousands_separator: ' '
         ).'₽';
     }

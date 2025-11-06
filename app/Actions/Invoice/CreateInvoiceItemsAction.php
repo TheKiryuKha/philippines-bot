@@ -16,7 +16,7 @@ final readonly class CreateInvoiceItemsAction
 
             foreach ($cart->items as $item) {
                 $invoice->items()->create([
-                    'product_option_id' => $item->product_option_id,
+                    'product_id' => $item->product_id,
                     'amount' => $item->amount,
                 ]);
             }

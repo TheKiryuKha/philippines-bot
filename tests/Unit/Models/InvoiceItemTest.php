@@ -11,7 +11,7 @@ test('to array', function () {
         ->toBe([
             'id',
             'invoice_id',
-            'product_option_id',
+            'product_id',
             'amount',
             'created_at',
             'updated_at',

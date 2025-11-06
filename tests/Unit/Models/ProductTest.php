@@ -3,7 +3,6 @@
 declare(strict_types=1);
 
 use App\Models\Product;
-use App\Models\ProductOption;
 
 test('to array', function () {
     $product = Product::factory()->create()->fresh();
@@ -13,18 +12,28 @@ test('to array', function () {
             'id',
             'title',
             'description',
+            'price',
             'created_at',
             'updated_at',
         ]);
 });
 
-it('has options', function () {
-    $option = ProductOption::factory()->make();
-    $product = Product::factory()->create();
+test('set price', function () {
+    $product = Product::factory()->price(1000)->create();
 
-    $product->options()->save($option);
+    $this->assertDatabaseHas('products', ['price' => 100000]);
+});
 
-    expect($product->options)->toHaveCount(1);
+test('get price', function () {
+    $product = Product::factory()->price(1000)->create();
+
+    expect($product->price)->toBe(1000);
+});
+
+test('get formatted price', function () {
+    $product = Product::factory()->price(1000)->create();
+
+    expect($product->formatted_price)->toBe('1 000₽');
 });
 
 test("media collectoin's", function () {

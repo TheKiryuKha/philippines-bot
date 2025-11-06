@@ -18,17 +18,13 @@ final class ProductResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        $this->resource->load('options');
-
         return [
             'id' => $this->resource->id,
             'type' => 'product',
             'attributes' => [
                 'title' => $this->resource->title,
                 'description' => $this->resource->description,
-                'options' => ProductOptionResource::collection(
-                    $this->whenLoaded('options')
-                ),
+                'price' => $this->resource->formatted_price,
                 'media' => new MediaResource(
                     $this->resource->getMedia('image')->first()
                 ),

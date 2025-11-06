@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Database\Factories;
 
 use App\Models\Cart;
-use App\Models\ProductOption;
+use App\Models\Product;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -22,7 +22,7 @@ final class CartItemFactory extends Factory
     {
         return [
             'cart_id' => Cart::factory(),
-            'product_option_id' => ProductOption::factory(),
+            'product_id' => Product::factory(),
             'amount' => fake()->numberBetween(1, 7),
         ];
     }
@@ -37,7 +37,7 @@ final class CartItemFactory extends Factory
     public function price(int $price): self
     {
         return $this->state(fn (array $attributes): array => [
-            'product_option_id' => ProductOption::factory()
+            'product_id' => Product::factory()
                 ->price($price)
                 ->create()
                 ->id,

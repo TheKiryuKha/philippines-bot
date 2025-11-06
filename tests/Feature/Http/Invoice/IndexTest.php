@@ -39,7 +39,7 @@ it("return's correct data", function () {
                                     'amount',
                                     'title',
                                     'description',
-                                    'option_id',
+                                    'product_id',
                                     'price',
                                     'formatted_price',
                                     'total_price',
