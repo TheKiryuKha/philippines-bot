@@ -9,7 +9,6 @@ use Carbon\CarbonInterface;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
@@ -18,10 +17,8 @@ use Spatie\MediaLibrary\InteractsWithMedia;
  * @property-read int $id
  * @property-read string $title
  * @property-read string $description
- * @property-read int $category_id
  * @property-read CarbonInterface $created_at
  * @property-read CarbonInterface $updated_at
- * @property-read Category $category
  * @property-read Collection<int, ProductOption> $options
  */
 final class Product extends Model implements HasMedia
@@ -30,14 +27,6 @@ final class Product extends Model implements HasMedia
     use HasFactory;
 
     use InteractsWithMedia;
-
-    /**
-     * @return BelongsTo<Category, $this>
-     */
-    public function category(): BelongsTo
-    {
-        return $this->belongsTo(Category::class);
-    }
 
     /**
      * @return HasMany<ProductOption, $this>

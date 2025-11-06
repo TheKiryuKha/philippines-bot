@@ -2,13 +2,10 @@
 
 declare(strict_types=1);
 
-use App\Models\Category;
 use App\Models\Product;
 
 beforeEach(function () {
-    $this->category = Category::factory()->create();
     Product::factory(3)
-        ->for($this->category)
         ->withImage()
         ->withOptions(3)
         ->create();
@@ -16,8 +13,7 @@ beforeEach(function () {
 
 it("return's correct status code", function () {
     $this->get(route(
-        'api:v1:categories:products:index',
-        $this->category
+        'api:v1:products:index',
     ))->assertStatus(
         200
     );
@@ -25,8 +21,7 @@ it("return's correct status code", function () {
 
 it("return's correct data", function () {
     $response = $this->getJson(route(
-        'api:v1:categories:products:index',
-        $this->category
+        'api:v1:products:index',
     ));
 
     $response->assertJsonStructure([

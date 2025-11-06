@@ -1,7 +1,6 @@
 <?php
 
 declare(strict_types=1);
-use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Support\Facades\Storage;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
@@ -22,22 +21,6 @@ it("save's product's data in DB", function () {
     $this->assertDatabaseHas('products', get_product_initials());
 });
 
-it("save's categories in DB", function () {
-    $data = get_product_data();
-
-    $this->post(route('api:v1:products:store'), $data);
-
-    $this->assertDatabaseHas('categories', ['title' => 'Мёд']);
-});
-
-it('drops Cache', function () {
-    Cache::remember('categories', 86400, fn () => Category::factory()->create());
-
-    $this->post(route('api:v1:products:store'), get_product_data());
-
-    expect(Cache::has('categories'))->toBeFalse();
-});
-
 it("save's media", function () {
     Storage::fake();
 
@@ -54,7 +37,6 @@ test('validation', function () {
         'image_link',
         'title',
         'description',
-        'category_title',
         'options',
     ]);
 });

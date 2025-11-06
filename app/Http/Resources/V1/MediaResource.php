@@ -18,7 +18,10 @@ final class MediaResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        $image = base64_encode(file_get_contents($this->resource->getPath()));
+        /** @var string $file_contents */
+        $file_contents = file_get_contents($this->resource->getPath());
+
+        $image = base64_encode($file_contents);
 
         return [
             'type' => $this->resource->type,

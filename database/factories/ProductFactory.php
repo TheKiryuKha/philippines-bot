@@ -6,7 +6,6 @@ namespace Database\Factories;
 
 use App\Models\Cart;
 use App\Models\CartItem;
-use App\Models\Category;
 use App\Models\Product;
 use App\Models\ProductOption;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -25,7 +24,6 @@ final class ProductFactory extends Factory
         return [
             'title' => fake()->title(),
             'description' => fake()->text(),
-            'category_id' => Category::factory(),
         ];
     }
 

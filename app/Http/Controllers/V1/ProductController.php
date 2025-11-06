@@ -8,19 +8,15 @@ use App\Actions\Product\CreateProductAction;
 use App\Actions\Product\DeleteProductAction;
 use App\Http\Requests\V1\Product\CreateProductRequest;
 use App\Http\Resources\V1\ProductResource;
-use App\Models\Category;
 use App\Models\Product;
-use App\Queries\FilterProductsForCategory;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 final readonly class ProductController
 {
-    public function index(Category $category, FilterProductsForCategory $query): AnonymousResourceCollection
+    public function index(): AnonymousResourceCollection
     {
-        $products = $query->handle(Product::query(), $category);
-
-        return ProductResource::collection($products->get());
+        return ProductResource::collection(Product::all());
     }
 
     public function store(CreateProductRequest $request, CreateProductAction $action): JsonResponse

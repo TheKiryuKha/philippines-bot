@@ -6,13 +6,11 @@ namespace App\Actions\Product;
 
 use App\Models\Product;
 use App\Models\ProductOption;
-use App\Services\CategoryCache;
 use Illuminate\Support\Facades\DB;
 
 final readonly class DeleteProductAction
 {
     public function __construct(
-        private CategoryCache $cache,
         private DeleteProductOptionAction $action
     ) {}
 
@@ -25,14 +23,6 @@ final readonly class DeleteProductAction
             );
 
             $product->delete();
-
-            $category = $product->category;
-
-            if ($category->products()->doesntExist()) {
-                $category->delete();
-            }
-
-            $this->cache->forget();
         });
     }
 }

@@ -17,7 +17,6 @@ final class CreateProductRequest extends FormRequest
             'image_link' => 'required|string',
             'title' => 'required|string|max:255',
             'description' => 'required|string',
-            'category_title' => 'required|string|max:255',
             'options' => 'required|array|min:1',
             'options.*.type' => 'required|string|max:255',
             'options.*.price' => 'required|integer|min:0',
@@ -30,7 +29,6 @@ final class CreateProductRequest extends FormRequest
      * image_link: string,
      * title: string,
      * description: string,
-     * category_title: string,
      * options: array<array{type: string, volume: string, price: int}>
      * }
      */
@@ -41,7 +39,6 @@ final class CreateProductRequest extends FormRequest
          * image_link: string,
          * title: string,
          * description: string,
-         * category_title: string,
          * options: array<array{type: string, volume: string, price: int}>
          * } $data
          */
