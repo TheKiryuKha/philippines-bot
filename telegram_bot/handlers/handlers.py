@@ -15,6 +15,8 @@ from handlers.send import send
 from handlers.save import create as save_create_products, store as save_store_products
 
 
+# long work...
+
 def register_handlers(dp: Dispatcher):
     dp.message.register(get_start, Command(commands='start'))
     dp.message.register(shop, Command(commands='shop'))

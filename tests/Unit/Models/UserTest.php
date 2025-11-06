@@ -11,10 +11,10 @@ test('to array', function () {
     expect(array_keys($user->toArray()))
         ->toBe([
             'id',
-            'created_at',
-            'updated_at',
             'username',
             'chat_id',
+            'created_at',
+            'updated_at',
         ]);
 });
 

@@ -18,7 +18,7 @@ final class ProductOptionFactory extends Factory
     public function definition(): array
     {
         return [
-            'volume' => fake()->randomElement(['100', '500', '1000']).fake()->randomElement(['мл', 'гр']),
+            'volume' => '50 ml',
             'price' => fake()->numberBetween(1000, 10000),
             'type' => fake()->randomElement([
                 'керамика',

@@ -42,7 +42,7 @@ it("return's correct data", function () {
                 ],
                 'media' => [
                     'type',
-                    'path',
+                    'image',
                 ],
             ],
         ],
