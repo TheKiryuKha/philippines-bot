@@ -8,7 +8,7 @@ it("return's correct status code", function () {
     $visa = Visa::factory()->create();
 
     $this->patch(
-        route('api:v1:visas:update', $visa->user->chat_id),
+        route('api:v1:visas:update', $visa->id),
     )->assertStatus(
         200
     );
@@ -17,7 +17,7 @@ it("return's correct status code", function () {
 it("extend's visa", function () {
     $visa = Visa::factory()->expiration_date('20.03.2026')->create();
 
-    $this->patch(route('api:v1:visas:update', $visa->user->chat_id));
+    $this->patch(route('api:v1:visas:update', $visa->id));
 
     $this->assertDatabaseHas('visas', [
         'id' => $visa->id,

@@ -8,8 +8,8 @@ use App\Actions\Visa\CreateVisaAction;
 use App\Actions\Visa\ExtendVisaAction;
 use App\Http\Requests\V1\Visa\CreateVisaRequest;
 use App\Http\Resources\V1\VisaResource;
-use App\Models\User;
 use App\Models\Visa;
+use Illuminate\Http\JsonResponse;
 
 final readonly class VisaController
 {
@@ -25,5 +25,12 @@ final readonly class VisaController
         $action->handle($visa);
 
         return new VisaResource($visa);
+    }
+
+    public function destroy(Visa $visa): JsonResponse
+    {
+        $visa->delete();
+
+        return response()->json(status: 204);
     }
 }

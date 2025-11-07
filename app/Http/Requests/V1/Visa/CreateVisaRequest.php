@@ -25,14 +25,9 @@ final class CreateVisaRequest extends FormRequest
      */
     public function validated($key = null, $default = null): array
     {
-        /**
-         * @var array{
-         * chat_id: int,
-         * expiration_date: string
-         * } $data
-         */
-        $data = parent::validated($key, $default);
-
-        return $data;
+        return [
+            'chat_id' => $this->integer('chat_id'),
+            'expiration_date' => $this->string('expiration_date')->value(),
+        ];
     }
 }

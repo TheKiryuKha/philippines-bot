@@ -97,3 +97,6 @@ def create_visa(data):
 
 def extend_visa(visa_id: int):
     return requests.patch(API_URL + f"visas/{visa_id}", headers=headers)
+
+def delete_visa(visa_id: int):
+    return requests.delete(API_URL + f"visas/{visa_id}", headers=headers)
