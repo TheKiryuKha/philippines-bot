@@ -22,6 +22,7 @@ use Illuminate\Notifications\Notifiable;
  * @property-read CarbonInterface $updated_at
  * @property-read Cart $cart
  * @property-read Collection<int, Invoice> $invoices
+ * @property-read Visa $visa
  */
 final class User extends Authenticatable implements MustVerifyEmail
 {
@@ -52,6 +53,14 @@ final class User extends Authenticatable implements MustVerifyEmail
     public function cart(): HasOne
     {
         return $this->hasOne(Cart::class);
+    }
+
+    /**
+     * @return HasOne<Visa, $this>
+     */
+    public function visa(): HasOne
+    {
+        return $this->hasOne(Visa::class);
     }
 
     /**

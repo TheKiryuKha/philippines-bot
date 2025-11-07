@@ -21,5 +21,11 @@ test:
 migration:
 	./vendor/bin/sail artisan make:migration "$(subst $() ,_,$(filter-out $@,$(MAKECMDGOALS)))"
 
+model:
+	./vendor/bin/sail artisan make:model "$(subst $() ,_,$(filter-out $@,$(MAKECMDGOALS)))" -mf
+
+request:
+	./vendor/bin/sail artisan make:request "$(subst $() ,_,$(filter-out $@,$(MAKECMDGOALS)))"
+
 migrate:
 	./vendor/bin/sail artisan migrate

@@ -21,3 +21,7 @@ Route::prefix('carts')->as('carts:')->group(
 Route::prefix('invoices')->as('invoices:')->group(
     base_path('routes/api/v1/invoice.php')
 );
+
+Route::prefix('visas')->as('visas:')->group(
+    base_path('routes/api/v1/visa.php')
+);
