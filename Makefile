@@ -27,5 +27,11 @@ model:
 request:
 	./vendor/bin/sail artisan make:request "$(subst $() ,_,$(filter-out $@,$(MAKECMDGOALS)))"
 
+resource:
+	./vendor/bin/sail artisan make:resource "$(subst $() ,_,$(filter-out $@,$(MAKECMDGOALS)))"
+
+controller:
+	./vendor/bin/sail artisan make:controller "$(subst $() ,_,$(filter-out $@,$(MAKECMDGOALS)))"
+
 migrate:
 	./vendor/bin/sail artisan migrate

@@ -13,7 +13,8 @@ from state.StoreProductState import StoreProductState
 from handlers.invoice import pay, mark_paid, get_paid, mark_as_sent
 from handlers.send import send
 from handlers.save import create as save_create_products, store as save_store_products
-
+from handlers.visa import show as show_visa, store as store_visa
+from state.StoreVisaState import StoreVisaState
 
 # long work...
 
@@ -53,3 +54,7 @@ def register_handlers(dp: Dispatcher):
     dp.message.register(save_create_products, Command(commands='save'))
     dp.message.register(save_store_products, StoreProductState.regData)
     dp.callback_query.register(destroy_product, F.data.startswith('delete_'))
+
+    dp.message.register(show_visa, Command(commands='visa'))
+    dp.callback_query.register(show_visa, F.data =='visa')
+    dp.message.register(store_visa, StoreVisaState.regData)

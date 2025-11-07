@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Requests\V1\Visa;
 
+use App\Rules\OneVisaForUser;
 use Illuminate\Foundation\Http\FormRequest;
 
 final class CreateVisaRequest extends FormRequest
@@ -14,7 +15,7 @@ final class CreateVisaRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'user_id' => ['required', 'int', 'exists:users,id', 'unique:visas,id'],
+            'chat_id' => ['required', 'int', 'exists:users,chat_id', new OneVisaForUser],
             'expiration_date' => ['required', 'date_format:d.m.Y'],
         ];
     }

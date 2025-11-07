@@ -22,7 +22,7 @@ use Illuminate\Notifications\Notifiable;
  * @property-read CarbonInterface $updated_at
  * @property-read Cart $cart
  * @property-read Collection<int, Invoice> $invoices
- * @property-read Visa $visa
+ * @property-read ?Visa $visa
  */
 final class User extends Authenticatable implements MustVerifyEmail
 {
@@ -38,6 +38,11 @@ final class User extends Authenticatable implements MustVerifyEmail
         'password',
         'remember_token',
     ];
+
+    public static function findByChatId(int $chat_id): self
+    {
+        return self::where('chat_id', $chat_id)->firstOrFail();
+    }
 
     /**
      * @return HasMany<Invoice, $this>

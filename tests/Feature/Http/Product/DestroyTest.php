@@ -2,9 +2,7 @@
 
 declare(strict_types=1);
 use App\Models\Cart;
-use App\Models\CartItem;
 use App\Models\Product;
-use Illuminate\Support\Facades\Log;
 
 it("return's correct status code", function () {
     $this->delete(
@@ -24,11 +22,9 @@ it("delete's product", function () {
 
 it("delete's product's from cart's", function () {
     $product = Product::factory()->inCart()->create();
-    Log::info(CartItem::all());
 
     $this->delete(route('api:v1:products:destroy', $product));
 
-    Log::info(CartItem::all());
     $this->assertDatabaseCount('cart_items', 0);
 });
 

@@ -15,6 +15,10 @@ async def set_commands(bot: Bot):
         BotCommand(
             command='cart',
             description='Корзина'
+        ),
+        BotCommand(
+            command='visa',
+            description='Моя виза'
         )
     ]
 
