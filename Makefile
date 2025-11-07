@@ -35,3 +35,7 @@ controller:
 
 migrate:
 	./vendor/bin/sail artisan migrate
+
+refresh\:db:
+	./vendor/bin/sail artisan db:wipe
+	./vendor/bin/sail artisan migrate --seed 

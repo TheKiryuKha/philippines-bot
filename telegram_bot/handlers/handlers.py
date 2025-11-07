@@ -15,6 +15,7 @@ from handlers.send import send
 from handlers.save import create as save_create_products, store as save_store_products
 from handlers.visa import show as show_visa, store as store_visa
 from state.StoreVisaState import StoreVisaState
+from handlers.clear_state import clear_state
 
 # long work...
 
@@ -58,3 +59,5 @@ def register_handlers(dp: Dispatcher):
     dp.message.register(show_visa, Command(commands='visa'))
     dp.callback_query.register(show_visa, F.data =='visa')
     dp.message.register(store_visa, StoreVisaState.regData)
+
+    dp.callback_query.register(clear_state, F.data == 'clear_state')

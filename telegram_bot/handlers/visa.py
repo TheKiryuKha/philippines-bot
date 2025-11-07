@@ -5,6 +5,7 @@ from utils.clear_messages import clear
 from state.StoreVisaState import StoreVisaState
 from aiogram.fsm.context import FSMContext
 from datetime import datetime
+from keyboards.clear_state_keyboard import create_kb
 
 
 async def show(update: CallbackQuery, bot: Bot, state: FSMContext):
@@ -15,7 +16,8 @@ async def show(update: CallbackQuery, bot: Bot, state: FSMContext):
     if response.status_code == 204:
         await bot.send_message(
             chat_id=update.from_user.id,
-            text=f"Похоже ты еще не добавил визу. Отправь пж дату истечения"
+            text=f"Похоже ты еще не добавил визу. Отправь пж дату истечения",
+            reply_markup=create_kb()
         )
         await state.set_state(StoreVisaState.regData)
         return
