@@ -1,11 +1,12 @@
 from aiogram import Bot
 from aiogram.types import CallbackQuery, Message
-from utils.api import get_visa, create_visa
+from utils.api import get_visa, create_visa, extend_visa
 from utils.clear_messages import clear
 from state.StoreVisaState import StoreVisaState
 from aiogram.fsm.context import FSMContext
 from datetime import datetime
 from keyboards.clear_state_keyboard import create_kb
+from keyboards.visa_keyboard import create_kb as visa_kb
 
 
 async def show(update: CallbackQuery, bot: Bot, state: FSMContext):
@@ -26,7 +27,8 @@ async def show(update: CallbackQuery, bot: Bot, state: FSMContext):
 
     await bot.send_message(
         chat_id=update.from_user.id,
-        text=f"твоя виза:{visa}"
+        text=f"твоя виза:{visa}",
+        reply_markup=visa_kb(visa)
     )
 
 async def store(update: Message, bot: Bot, state: FSMContext):
@@ -63,6 +65,19 @@ async def store(update: Message, bot: Bot, state: FSMContext):
     await bot.send_message(
         chat_id=update.from_user.id,
         text=f"Виза успешно сохранена!"
+    )
+
+async def extend(update: CallbackQuery, bot: Bot):
+    await update.answer()
+    await clear(update, bot)
+
+    visa_id = update.data.split('_')[1]
+    response = extend_visa(visa_id)
+
+
+    await bot.send_message(
+        chat_id=update.from_user.id,
+        text=response.content
     )
 
 

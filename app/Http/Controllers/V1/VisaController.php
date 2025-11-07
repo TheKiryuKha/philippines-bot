@@ -20,13 +20,10 @@ final readonly class VisaController
         return new VisaResource($visa);
     }
 
-    public function update(User $user, ExtendVisaAction $action): VisaResource
+    public function update(Visa $visa, ExtendVisaAction $action): VisaResource
     {
-        /** @var Visa $visa */
-        $visa = $user->visa;
-
         $action->handle($visa);
 
-        return new VisaResource($user->visa);
+        return new VisaResource($visa);
     }
 }

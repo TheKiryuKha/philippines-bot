@@ -92,6 +92,8 @@ def get_cities(city: str):
 def get_visa(user_id: int):
     return requests.get(API_URL + f'users/{user_id}/visa', headers=headers)
     
-
 def create_visa(data):
     return requests.post(API_URL + f'visas', headers=headers, json=data)
+
+def extend_visa(visa_id: int):
+    return requests.patch(API_URL + f"visas/{visa_id}", headers=headers)

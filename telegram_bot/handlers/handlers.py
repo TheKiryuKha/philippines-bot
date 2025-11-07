@@ -13,7 +13,7 @@ from state.StoreProductState import StoreProductState
 from handlers.invoice import pay, mark_paid, get_paid, mark_as_sent
 from handlers.send import send
 from handlers.save import create as save_create_products, store as save_store_products
-from handlers.visa import show as show_visa, store as store_visa
+from handlers.visa import show as show_visa, store as store_visa, extend
 from state.StoreVisaState import StoreVisaState
 from handlers.clear_state import clear_state
 
@@ -59,5 +59,7 @@ def register_handlers(dp: Dispatcher):
     dp.message.register(show_visa, Command(commands='visa'))
     dp.callback_query.register(show_visa, F.data =='visa')
     dp.message.register(store_visa, StoreVisaState.regData)
+
+    dp.callback_query.register(extend, F.data.startswith('extend_'))
 
     dp.callback_query.register(clear_state, F.data == 'clear_state')
