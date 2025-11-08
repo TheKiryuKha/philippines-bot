@@ -11,7 +11,7 @@ from handlers.invoice import start_create, store as store_invoice, create_city, 
 from state.StoreInvoiceState import StoreInvoiceState
 from state.StoreProductState import StoreProductState
 from handlers.invoice import pay, mark_paid, get_paid, mark_as_sent
-from handlers.send import send
+from handlers.send import send, sendall
 from handlers.save import create as save_create_products, store as save_store_products
 from handlers.visa import show as show_visa, store as store_visa, extend, delete as delete_visa
 from state.StoreVisaState import StoreVisaState
@@ -65,3 +65,5 @@ def register_handlers(dp: Dispatcher):
     dp.callback_query.register(delete_visa, F.data.startswith('deleteVisa_'))
 
     dp.callback_query.register(clear_state, F.data == 'clear_state')
+
+    dp.message.register(sendall, Command(commands='sendall'))

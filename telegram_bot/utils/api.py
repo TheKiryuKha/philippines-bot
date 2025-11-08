@@ -100,3 +100,6 @@ def extend_visa(visa_id: int):
 
 def delete_visa(visa_id: int):
     return requests.delete(API_URL + f"visas/{visa_id}", headers=headers)
+
+def get_users():
+    return requests.get(API_URL + f"users", headers=headers).json()['data']

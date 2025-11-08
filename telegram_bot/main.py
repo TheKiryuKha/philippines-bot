@@ -14,7 +14,7 @@ dp = Dispatcher()
 async def start_bot(bot: Bot):
     await bot.send_message(ADMIN_ID, text='Я запустил бота!')
 
-dp.startup.register(start_bot)
+# dp.startup.register(start_bot)
 
 register_handlers(dp)
 
