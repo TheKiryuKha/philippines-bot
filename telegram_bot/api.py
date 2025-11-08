@@ -15,19 +15,19 @@ class SingleMessage(BaseModel):
 
 # Модель для запроса
 class MessageRequest(BaseModel):
-    messages: List[SingleMessage]
+    visas: List[SingleMessage]
 
 # Создание FastAPI приложения
 app = FastAPI(title="Telegram Bot API")
 
-@app.post("/send_message")
+@app.post("/notify")
 async def send_message(request: MessageRequest):
     """
     Отправляет сообщение в указанный чат
     """
     try:
-        for message in request.messages:
-            await bot.send_message(chat_id=message.chat_id, text=message.time_until_expiration)
+        for visa in request.visas:
+            await bot.send_message(chat_id=visa.chat_id, text=visa.time_until_expiration)
     except Exception as e:
         raise HTTPException(status_code=400, detail=f"Ошибка отправки: {str(e)}")
 

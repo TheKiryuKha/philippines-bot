@@ -16,8 +16,8 @@ final readonly class CDEKAPIService
     public function __construct()
     {
         $this->cdek = new CdekClientV2(
-            config()->string('cdek.account'),
-            config()->string('cdek.secret')
+            config()->string('api.cdek.account'),
+            config()->string('api.cdek.secret')
         );
     }
 

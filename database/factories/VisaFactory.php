@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Database\Factories;
 
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -29,6 +30,27 @@ final class VisaFactory extends Factory
     {
         return $this->state(fn (array $attributes): array => [
             'expiration_date' => $date,
+        ]);
+    }
+
+    public function expiries_in_two_weeks(): self
+    {
+        return $this->state(fn (array $attributes): array => [
+            'expiration_date' => Carbon::today()->addWeeks(2)->format('d.m.Y'),
+        ]);
+    }
+
+    public function expiries_in_week(): self
+    {
+        return $this->state(fn (array $attributes): array => [
+            'expiration_date' => Carbon::today()->addWeek()->format('d.m.Y'),
+        ]);
+    }
+
+    public function expiries_in_one_day(): self
+    {
+        return $this->state(fn (array $attributes): array => [
+            'expiration_date' => Carbon::today()->addDay(),
         ]);
     }
 }
