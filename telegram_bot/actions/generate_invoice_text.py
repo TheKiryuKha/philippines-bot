@@ -21,10 +21,10 @@ def generate(invoice):
     # message += f"\n\n <b>Способы оплаты:</b>\n\n"
     message += ( 
             f"⚡️\n\n <b>Реквизиты для оплаты</b> 👇\n\n"
-            f"WORK IN PROGRESS \n"
+            f"WORK IN PROGRESS \n\n"
     )
     message += "‼️ <b> ВАЖНО: для завершения и отправки заказа отправьте скриншот 🧾 об оплате в этот чат.</b>\n"
-    message += "📩 Данные для отслеживания придут в этом диалоге с ботом"
+    # message += "📩 Данные для отслеживания придут в этом диалоге с ботом"
 
     return message
 
@@ -36,7 +36,7 @@ def generate_for_admin(invoice):
             f"{invoice['attributes']['first_name']} "
             f"{invoice['attributes']['middle_name']}\n"
         f"Номер телефона: {invoice['attributes']['phone']}\n\n"
-        f"<b> Адрес СДЭК: {invoice['attributes']['delivery_address']}\n\n </b>"
+        f"<b> Адрес доставки: {invoice['attributes']['delivery_address']}\n\n </b>"
         f"● Товары:\n"  
     )
 
@@ -57,7 +57,7 @@ def generate_for_shipping(invoice):
             f"{invoice['attributes']['first_name']} "
             f"{invoice['attributes']['middle_name']}\n"
         f"Номер телефона: {invoice['attributes']['phone']}\n"
-        f"Адрес СДЭК: {invoice['attributes']['delivery_address']}\n\n </b>"
+        f"Адрес доставки: {invoice['attributes']['delivery_address']}\n\n </b>"
         f"● Товары:"  
     )
 

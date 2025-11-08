@@ -21,6 +21,8 @@ final class VisaResource extends JsonResource
         return [
             'id' => $this->resource->id,
             'attributes' => [
+                'expiration_time' => $this->resource->expiration_date->diffForHumans(),
+                'extension_date' => $this->resource->expiration_date->translatedFormat('j F Y года'),
                 'expiration_date' => $this->resource->expiration_date,
             ],
         ];

@@ -7,4 +7,11 @@ async def shop(message: Message, bot: Bot):
 
     await clear(message, bot)
 
-    await bot.send_message(message.from_user.id, f'Наши товары:', reply_markup=create_kb())
+    text = (
+        f"<b>🥥МАГАЗИН🌴</b>\n"
+        f"(еще одно очень крутое описание)\n\n"
+        f"Порадуй себя свежими филиппинскими продуктами:"
+    )
+
+
+    await bot.send_message(chat_id=message.from_user.id, text=text, reply_markup=create_kb(), parse_mode='HTML')

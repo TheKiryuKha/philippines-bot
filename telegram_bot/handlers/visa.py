@@ -15,20 +15,36 @@ async def show(update: CallbackQuery, bot: Bot, state: FSMContext):
     response = get_visa(update.from_user.id)
 
     if response.status_code == 204:
+
+        text = (
+            f"<b>🇵🇭 МОЯ ВИЗА </b>\n\n"
+            f"Этот бот поможет тебе продлять твою визу. За 2 недели до истечения визы, он будет отправлять тебе уведомления. Для этого просто отправь дату истечения своей визы боту"
+            f'\n\n<b>ВАЖНО</b>: отправь дату в формате "день.месяц.год" \n пример: 31.03.2027'
+        )
+
         await bot.send_message(
             chat_id=update.from_user.id,
-            text=f"Похоже ты еще не добавил визу. Отправь пж дату истечения",
-            reply_markup=create_kb()
+            text=text,
+            reply_markup=create_kb(),
+            parse_mode='HTML'
         )
         await state.set_state(StoreVisaState.regData)
         return
     
     visa = response.json()['data']
 
+    text = (
+        f"<b>🛩 ВИЗА</b>\n\n"
+
+        f"<b>Истечет</b> {visa['attributes']['expiration_time']}\n"
+        f"<b>Дата продления:</b> {visa['attributes']['extension_date']}"
+    )
+
     await bot.send_message(
         chat_id=update.from_user.id,
-        text=f"твоя виза:{visa}",
-        reply_markup=visa_kb(visa)
+        text=text,
+        reply_markup=visa_kb(visa),
+        parse_mode='HTML'
     )
 
 async def store(update: Message, bot: Bot, state: FSMContext):
@@ -64,7 +80,7 @@ async def store(update: Message, bot: Bot, state: FSMContext):
 
     await bot.send_message(
         chat_id=update.from_user.id,
-        text=f"Виза успешно сохранена!"
+        text=f"✅ Виза успешно сохранена!"
     )
 
 async def extend(update: CallbackQuery, bot: Bot):
@@ -72,11 +88,20 @@ async def extend(update: CallbackQuery, bot: Bot):
     await clear(update, bot)
 
     visa_id = update.data.split('_')[1]
-    response = extend_visa(visa_id)
+    visa = extend_visa(visa_id)
+
+    text = (
+        f"<b>🛩 ВИЗА</b>\n\n"
+
+        f"<b>Истечет</b> {visa['attributes']['expiration_time']}\n"
+        f"<b>Дата продления:</b> {visa['attributes']['extension_date']}"
+    )
 
     await bot.send_message(
         chat_id=update.from_user.id,
-        text=response.content
+        text=text,
+        reply_markup=visa_kb(visa),
+        parse_mode='HTML'
     )
 
 async def delete(update: CallbackQuery, bot: Bot):
@@ -88,7 +113,7 @@ async def delete(update: CallbackQuery, bot: Bot):
 
     await bot.send_message(
         chat_id=update.from_user.id,
-        text=f"удалили визу епта"
+        text=f"✅ Данные о визе очищены. Ты можешь внести новые данные командой /visa"
     )
 
 

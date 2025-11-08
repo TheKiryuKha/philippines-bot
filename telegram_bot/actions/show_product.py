@@ -9,9 +9,9 @@ async def show_product(update: CallbackQuery, bot: Bot, product: List[Any]):
 
     cart = get_cart(update.from_user.id)
 
-    text = f"<b>{product['attributes']['title']}</b>\n"
+    text = f"<b>{product['attributes']['title']}</b>\n\n"
     text += f"{product['attributes']['description']}\n\n"
-    text += f"Цена: {product['attributes']['price']}"
+    text += f"💰 Цена: {product['attributes']['price']}"
 
     base64_str = product['attributes']['media']['image']
     
