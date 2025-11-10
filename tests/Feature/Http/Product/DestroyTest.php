@@ -28,6 +28,18 @@ it("delete's product's from cart's", function () {
     $this->assertDatabaseCount('cart_items', 0);
 });
 
+it("clear's cache", function () {
+    $product = Cache::remember(
+        'products',
+        86400,
+        fn () => Product::factory()->create()
+    );
+
+    $this->delete(route('api:v1:products:destroy', $product));
+
+    expect(Cache::has('products'))->toBeFalse();
+});
+
 it("update's cart data after removing product from it", function () {
     $product = Product::factory()->inCart()->create();
 

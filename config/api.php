@@ -40,6 +40,6 @@ return [
         |
         */
 
-        'api_url' => env('BOT_API_URL', 'http://telegram-bot:1002'),
+        'api_url' => env('BOT_API_URL', 'http://telegram-bot:8002'),
     ],
 ];

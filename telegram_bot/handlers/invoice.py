@@ -10,6 +10,7 @@ from actions.generate_invoice_text import generate, generate_for_admin, generate
 from config import ADMIN_ID
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from keyboards.cities_keyboard import create_kb as create_cities_kb
+from keyboards.clear_state_keyboard import create_kb as clear_state_kb
 
 
 async def start_create(update: CallbackQuery, bot: Bot):
@@ -99,7 +100,8 @@ async def create_data(update: CallbackQuery, bot: Bot, state: FSMContext):
     await bot.send_message(
         chat_id=update.from_user.id,
         text=message,
-        parse_mode='HTML'
+        parse_mode='HTML',
+        reply_markup=clear_state_kb()
     )
     await state.set_state(StoreInvoiceState.regData)
 
@@ -175,7 +177,7 @@ async def pay(update: Message, state: FSMContext, bot: Bot):
         message_id=update.message_id
     )
 
-    await clear(update, bot)
+    # await clear(update, bot)
 
     await bot.send_message(
         chat_id=update.from_user.id,

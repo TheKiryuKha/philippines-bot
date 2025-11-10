@@ -28,4 +28,12 @@ final readonly class BotAPIService
     {
         $this->request->post($this->api_url.'/notify', $data);
     }
+
+    /**
+     * @param  array{}|array{users: non-empty-list<array{chat_id: int}>}  $data
+     */
+    public function delete_invoice(array $data): void
+    {
+        $this->request->post($this->api_url.'/delete_invoice', $data);
+    }
 }

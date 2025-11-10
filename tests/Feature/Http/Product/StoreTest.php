@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use App\Models\Product;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
@@ -29,6 +30,18 @@ it("save's media", function () {
 
     expect(Product::first()->getFirstMedia('image'))
         ->toBeInstanceOf(Media::class);
+});
+
+it("clear's cache", function () {
+    Cache::remember(
+        'products',
+        86400,
+        fn () => Product::all()
+    );
+
+    $this->post(route('api:v1:products:store'), get_product_data());
+
+    expect(Cache::has('products'))->toBeFalse();
 });
 
 test('validation', function () {

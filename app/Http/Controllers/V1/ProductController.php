@@ -9,14 +9,17 @@ use App\Actions\Product\DeleteProductAction;
 use App\Http\Requests\V1\Product\CreateProductRequest;
 use App\Http\Resources\V1\ProductResource;
 use App\Models\Product;
+use App\Services\ProductCacheService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 final readonly class ProductController
 {
-    public function index(): AnonymousResourceCollection
+    public function index(ProductCacheService $service): AnonymousResourceCollection
     {
-        return ProductResource::collection(Product::all());
+        $products = $service->get_cache();
+
+        return ProductResource::collection($products);
     }
 
     public function store(CreateProductRequest $request, CreateProductAction $action): JsonResponse
