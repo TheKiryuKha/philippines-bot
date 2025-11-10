@@ -2,9 +2,11 @@ from aiogram import Bot
 from aiogram.types import CallbackQuery
 from aiogram.fsm.context import FSMContext
 from keyboards.start_keyboard import start_kb
+from utils.clear_messages import clear
 
 async def clear_state(update: CallbackQuery, bot: Bot, state: FSMContext):
     await update.answer()
+    await clear(update, bot)
     await state.clear()
 
     text = (f"Привет! \n\n"
