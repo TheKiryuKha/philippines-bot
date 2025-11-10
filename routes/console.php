@@ -10,3 +10,10 @@ Schedule::daily()
     ->group(function () {
         Schedule::command('check-visas');
     });
+
+Schedule::everyThirtyMinutes()
+    ->onOneServer()
+    ->timezone('Asia/Manila')
+    ->group(function () {
+        Schedule::command('delete-expired-invoices');
+    });

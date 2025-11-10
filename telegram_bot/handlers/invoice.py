@@ -177,7 +177,7 @@ async def pay(update: Message, state: FSMContext, bot: Bot):
         message_id=update.message_id
     )
 
-    await clear(update, bot)
+    # await clear(update, bot)
 
     await bot.send_message(
         chat_id=update.from_user.id,

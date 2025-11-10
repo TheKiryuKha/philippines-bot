@@ -38,7 +38,7 @@ it("save's invoice in DB", function () {
         'user_id' => $this->cart->user_id,
         'price' => $this->cart->price * 100,
         'status' => InvoiceStatus::Created,
-        'expires_at' => now()->addMinutes(5),
+        'expires_at' => now()->addMinutes(30),
     ]);
 });
 

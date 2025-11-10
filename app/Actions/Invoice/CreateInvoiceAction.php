@@ -38,7 +38,7 @@ final readonly class CreateInvoiceAction
                 ...$attr,
                 'price' => $cart->price,
                 'status' => InvoiceStatus::Created,
-                'expires_at' => now()->addMinutes(5),
+                'expires_at' => now()->addMinutes(30),
                 'user_id' => $cart->user_id,
             ]);
 

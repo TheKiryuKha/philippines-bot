@@ -17,6 +17,12 @@ class SingleMessage(BaseModel):
 class MessageRequest(BaseModel):
     visas: List[SingleMessage]
 
+class ChatID(BaseModel):
+    chat_id: int
+
+class DeletInvoices(BaseModel):
+    users: List[ChatID]
+
 # Создание FastAPI приложения
 app = FastAPI(title="Telegram Bot API")
 
@@ -36,6 +42,26 @@ async def send_message(request: MessageRequest):
 
             await bot.send_message(
                 chat_id=visa.chat_id,
+                text=message,
+                parse_mode='HTML'
+            )
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=f"Ошибка отправки: {str(e)}")
+
+@app.post("/delete_invoice")
+async def send_message(request: DeletInvoices):
+    """
+    Отправляет сообщение в указанный чат
+    """
+    try:
+        for user in request.users:
+
+            message = (
+                f"❌ Данные вашего заказа были очищены"
+            )
+
+            await bot.send_message(
+                chat_id=user.chat_id,
                 text=message,
                 parse_mode='HTML'
             )
