@@ -6,12 +6,14 @@ namespace App\Actions\Product;
 
 use App\Actions\Cart\EditCartAction;
 use App\Models\Product;
+use App\Services\ProductCacheService;
 use Illuminate\Support\Facades\DB;
 
 final readonly class DeleteProductAction
 {
     public function __construct(
-        private EditCartAction $action
+        private EditCartAction $action,
+        private ProductCacheService $cache,
     ) {}
 
     public function handle(Product $product): void
@@ -30,6 +32,8 @@ final readonly class DeleteProductAction
             }
 
             $product->delete();
+
+            $this->cache->clear();
         });
     }
 }

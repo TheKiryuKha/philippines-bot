@@ -5,10 +5,15 @@ declare(strict_types=1);
 namespace App\Actions\Product;
 
 use App\Models\Product;
+use App\Services\ProductCacheService;
 use Illuminate\Support\Facades\DB;
 
 final readonly class CreateProductAction
 {
+    public function __construct(
+        private ProductCacheService $service
+    ) {}
+
     /**
      * @param array{
      * image_link: string,
@@ -28,6 +33,8 @@ final readonly class CreateProductAction
             $product
                 ->addMediaFromUrl($image)
                 ->toMediaCollection('image');
+
+            $this->service->clear();
         });
     }
 }

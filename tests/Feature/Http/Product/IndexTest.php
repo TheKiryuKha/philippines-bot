@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use App\Models\Product;
+use Illuminate\Support\Facades\Cache;
 
 beforeEach(function () {
     Product::factory(3)
@@ -16,6 +17,12 @@ it("return's correct status code", function () {
     ))->assertStatus(
         200
     );
+});
+
+it("cache's data", function () {
+    $this->get(route('api:v1:products:index'));
+
+    expect(Cache::has('products'))->toBeTrue();
 });
 
 it("return's correct data", function () {
