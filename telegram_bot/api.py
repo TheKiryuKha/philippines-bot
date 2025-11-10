@@ -27,7 +27,18 @@ async def send_message(request: MessageRequest):
     """
     try:
         for visa in request.visas:
-            await bot.send_message(chat_id=visa.chat_id, text=visa.time_until_expiration)
+
+            message = (
+                f"<b>🌴 ВНИМАНИЕ 🌴</b>\n\n"
+                f"Ваша виза истечёт <b>{visa.time_until_expiration}</b>\n"
+                f"Рекомендуем продлить ее"
+            )
+
+            await bot.send_message(
+                chat_id=visa.chat_id,
+                text=message,
+                parse_mode='HTML'
+            )
     except Exception as e:
         raise HTTPException(status_code=400, detail=f"Ошибка отправки: {str(e)}")
 
