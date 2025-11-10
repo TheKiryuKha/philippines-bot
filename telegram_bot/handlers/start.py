@@ -6,8 +6,6 @@ from utils.api import create_user
 
 
 async def get_start(message: Message, bot: Bot):
-    await clear(message, bot)
-
     create_user(message.from_user.id, message.from_user.username)
 
     text = (f"<b>🇵🇭 Приветствую!</b>\n"

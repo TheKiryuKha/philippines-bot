@@ -13,6 +13,6 @@ async def clear(update: Union[Message, CallbackQuery], bot: Bot):
     await bot.delete_message(chat_id, message_id)
 
     try:
-        await bot.delete_message(chat_id, message_id - 1)
+        await bot.delete_message(chat_id, message_id)
     except Exception:
         pass
