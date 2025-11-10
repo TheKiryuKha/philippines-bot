@@ -3,10 +3,7 @@ import asyncio
 from utils.commands import set_commands
 from handlers.handlers import register_handlers
 from config import TOKEN, ADMIN_ID, BOT_API_HOST, BOT_API_PORT
-import threading
 import uvicorn
-
-# TODO auth
 
 bot = Bot(token=TOKEN)
 dp = Dispatcher()
@@ -14,24 +11,29 @@ dp = Dispatcher()
 async def start_bot(bot: Bot):
     await bot.send_message(ADMIN_ID, text='Я запустил бота!')
 
-# dp.startup.register(start_bot)
-
+dp.startup.register(start_bot)
 register_handlers(dp)
 
-def run_api():
+async def run_api():
     """Запуск API сервера"""
-    uvicorn.run("api:app", host=BOT_API_HOST, port=BOT_API_PORT, reload=False)
+    config = uvicorn.Config(
+        "api:app", 
+        host=BOT_API_HOST, 
+        port=BOT_API_PORT, 
+        log_level="info",
+        reload=False
+    )
+    server = uvicorn.Server(config)
+    await server.serve()
 
 async def start():
-    # Запускаем API в отдельном потоке
-    api_thread = threading.Thread(target=run_api, daemon=True)
-    api_thread.start()
-    
     await set_commands(bot)
-    try:
-        await dp.start_polling(bot, skip_updates=True)
-    finally:
-        await bot.session.close()
+    
+    # Запускаем бота и API параллельно
+    await asyncio.gather(
+        dp.start_polling(bot, skip_updates=True),
+        run_api()
+    )
 
 if __name__ == '__main__':
     asyncio.run(start())
