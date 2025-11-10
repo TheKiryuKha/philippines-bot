@@ -11,4 +11,4 @@ TOKEN = os.getenv('TELEGRAM_BOT_TOKEN')
 ADMIN_ID = os.getenv('TELEGRAM_ADMIN_ID')
 
 BOT_API_HOST = os.getenv('BOT_API_HOST')
-BOT_API_PORT = int(os.getenv('BOT_API_PORT'))
+BOT_API_PORT = int(os.getenv('BOT_API_PORT', '8002'))

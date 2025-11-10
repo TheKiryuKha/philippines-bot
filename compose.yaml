@@ -54,13 +54,13 @@ services:
             context: './telegram_bot'
             dockerfile: Dockerfile
         ports:
-            - '1002:1002'
+            - '8002:8002'
         environment:
             APP_URL: 'http://laravel.test:80'
             TELEGRAM_BOT_TOKEN: '${TELEGRAM_BOT_TOKEN}'
             TELEGRAM_ADMIN_ID: '${TELEGRAM_ADMIN_ID}'
             BOT_API_HOST: '0.0.0.0'
-            BOT_API_PORT: '1002'
+            BOT_API_PORT: '8002'
         networks:
             - sail
         depends_on:
